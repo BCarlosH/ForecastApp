@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ForecastApp</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+
+    <string name="today">Today</string>
+    <string name="text_7_days">7 Days</string>
+    <string name="settings">Settings</string>
+
 </resources>
