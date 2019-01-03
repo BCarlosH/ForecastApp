@@ -1,9 +1,18 @@
-package com.example.carlos.forecastapp.data.response
+package com.example.carlos.forecastapp.data.db.entity
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+
+const val CURRENT_WEATHER_ID = 0
+
+
+@Entity(tableName = "current_weather")
 data class CurrentWeatherEntry(
     val cloud: Int,
+    @Embedded(prefix = "condition_")
     val condition: Condition,
     @SerializedName("feelslike_c")
     val feelslikeC: Double,
@@ -41,4 +50,12 @@ data class CurrentWeatherEntry(
     val windKph: Double,
     @SerializedName("wind_mph")
     val windMph: Double
-)
+) {
+
+    /**
+     * The DB will have just one current weather
+     */
+    @PrimaryKey(autoGenerate = false)
+    var id: Int = CURRENT_WEATHER_ID
+
+}
