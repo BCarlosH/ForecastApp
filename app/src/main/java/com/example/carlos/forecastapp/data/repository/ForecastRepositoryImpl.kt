@@ -26,11 +26,14 @@ class ForecastRepositoryImpl(
 
     override suspend fun getCurrentWeather(isMetric: Boolean): LiveData<out UnitSpecificCurrentWeatherEntry> {
         return withContext(Dispatchers.IO) {
+            initWeatherData()
+
             if (isMetric) {
                 return@withContext currentWeatherDao.getWeatherMetric()
             } else {
                 return@withContext currentWeatherDao.getWeatherImperial()
             }
+
         }
     }
 

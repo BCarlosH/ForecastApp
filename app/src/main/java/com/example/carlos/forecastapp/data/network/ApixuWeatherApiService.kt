@@ -20,7 +20,7 @@ const val BASE_URL = "https://api.apixu.com/v1/"
 interface ApixuWeatherApiService {
 
     @GET("current.json")
-    fun getCurrentWeather(
+    fun getCurrentWeatherAsync(
         @Query("q") location: String
     ): Deferred<CurrentWeatherResponse>
 
