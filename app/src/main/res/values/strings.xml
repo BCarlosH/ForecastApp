@@ -11,13 +11,22 @@
     <string name="feels_like">Feels like %1$.1f%2$s</string>
     <string name="millimeters">mm</string>
     <string name="inches">in</string>
-    <string name="preciptiation">Preciptiation: %1$.1f %2$s</string>
+    <string name="preciptiation">Precipitation: %1$.1f %2$s</string>
     <string name="kilometers_per_hour">kph</string>
     <string name="miles_per_hour">mph</string>
     <string name="wind">Wind: %1$s, %2$.1f %3$s</string>
     <string name="kilometers">km</string>
     <string name="miles">mi.</string>
     <string name="visibility">Visibility: %1$.1f %2$s</string>
+
+    <!--Settings-->
+    <string name="weather_location">Weather Location</string>
+    <string name="use_device_location">Use device location</string>
+    <string name="allow_app_to_get_your_location">Allow the app to get your location</string>
+    <string name="location">Location</string>
+    <string name="location_weather_is_displayed">The location for which the weather is displayed</string>
+    <string name="units">Units</string>
+    <string name="unit_system">Unit system</string>
 
 
 </resources>
