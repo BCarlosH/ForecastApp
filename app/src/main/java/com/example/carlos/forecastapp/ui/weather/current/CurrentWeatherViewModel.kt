@@ -12,7 +12,7 @@ class CurrentWeatherViewModel(
 
     private val unitSystem = UnitSystem.METRIC //get from settings
 
-    private val isMetric: Boolean
+    val isMetric: Boolean
         get() = unitSystem == UnitSystem.METRIC
 
     val weather by lazyDeferred {
