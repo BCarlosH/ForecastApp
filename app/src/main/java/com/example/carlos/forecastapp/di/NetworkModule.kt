@@ -16,5 +16,4 @@ val networkModule = Kodein.Module(MODULE_NAME, false) {
     bind<WeatherNetworkDataSource>() with singleton { WeatherNetworkDataSourceImpl(instance()) }
     bind<ConnectivityInterceptor>() with singleton { ConnectivityInterceptorImpl(instance()) }
 
-
 }

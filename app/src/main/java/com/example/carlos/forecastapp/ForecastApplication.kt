@@ -8,7 +8,7 @@ import com.example.carlos.forecastapp.data.repository.ForecastRepositoryImpl
 import com.example.carlos.forecastapp.di.dbModule
 import com.example.carlos.forecastapp.di.networkModule
 import com.example.carlos.forecastapp.di.providerModule
-import com.example.carlos.forecastapp.ui.weather.current.CurrentWeatherViewModelFactory
+import com.example.carlos.forecastapp.di.viewModelFactoryModule
 import com.google.android.gms.location.LocationServices
 import com.jakewharton.threetenabp.AndroidThreeTen
 import org.kodein.di.Kodein
@@ -26,11 +26,19 @@ class ForecastApplication : Application(), KodeinAware {
     override val kodein: Kodein = Kodein.lazy {
         import(androidXModule(this@ForecastApplication))
 
-        bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance(), instance(), instance()) }
+        bind<ForecastRepository>() with singleton {
+            ForecastRepositoryImpl(
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
 
         bind() from provider { LocationServices.getFusedLocationProviderClient(instance<Context>()) }
-        bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }
 
+        import(viewModelFactoryModule)
         import(dbModule)
         import(networkModule)
         import(providerModule)
