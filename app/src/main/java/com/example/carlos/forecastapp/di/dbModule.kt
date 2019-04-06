@@ -14,6 +14,7 @@ val dbModule = Kodein.Module(MODULE_NAME, false) {
 
     bind() from singleton { ForecastDatabase(instance()) }
     bind() from singleton { instance<ForecastDatabase>().currentWeatherDao() }
+    bind() from singleton { instance<ForecastDatabase>().futureWeatherDao() }
     bind() from singleton { instance<ForecastDatabase>().weatherLocationDao() }
 
 }

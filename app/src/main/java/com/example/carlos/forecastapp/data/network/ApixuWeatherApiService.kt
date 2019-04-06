@@ -1,6 +1,7 @@
 package com.example.carlos.forecastapp.data.network
 
 import com.example.carlos.forecastapp.data.network.response.CurrentWeatherResponse
+import com.example.carlos.forecastapp.data.network.response.FutureWeatherResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
@@ -24,6 +25,12 @@ interface ApixuWeatherApiService {
     fun getCurrentWeatherAsync(
         @Query("q") location: String
     ): Deferred<CurrentWeatherResponse>
+
+    @GET("forecast.json")
+    fun getFutureWeatherAsync(
+        @Query("q") location: String,
+        @Query("days") days: Int
+    ): Deferred<FutureWeatherResponse>
 
 
     companion object {

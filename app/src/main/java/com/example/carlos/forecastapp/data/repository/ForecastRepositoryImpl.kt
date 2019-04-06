@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.carlos.forecastapp.data.db.CurrentWeatherDao
 import com.example.carlos.forecastapp.data.db.WeatherLocationDao
 import com.example.carlos.forecastapp.data.db.entity.WeatherLocation
-import com.example.carlos.forecastapp.data.db.unitlocalized.UnitSpecificCurrentWeatherEntry
+import com.example.carlos.forecastapp.data.db.unitlocalized.current.UnitSpecificCurrentWeatherEntry
 import com.example.carlos.forecastapp.data.network.WeatherNetworkDataSource
 import com.example.carlos.forecastapp.data.network.response.CurrentWeatherResponse
 import com.example.carlos.forecastapp.data.provider.LocationProvider

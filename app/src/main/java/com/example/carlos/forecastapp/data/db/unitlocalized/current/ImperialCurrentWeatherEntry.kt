@@ -1,4 +1,4 @@
-package com.example.carlos.forecastapp.data.db.unitlocalized
+package com.example.carlos.forecastapp.data.db.unitlocalized.current
 
 import androidx.room.ColumnInfo
 
