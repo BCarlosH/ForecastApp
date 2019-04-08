@@ -41,7 +41,13 @@ class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(FutureListWeatherViewModel::class.java)
+
+        initViews()
         bindUI()
+    }
+
+    private fun initViews() {
+        updateSupportActionBarSubtitle(getString(R.string.text_7_days))
     }
 
     private fun bindUI() = launch(Dispatchers.Main) {
@@ -53,23 +59,22 @@ class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
 
             group_loading.visibility = View.GONE
 
-            updateDateToNextDays()
             initRecyclerView(futureWeatherList.toFutureWeatherItems())
         })
 
         weatherLocation.observe(this@FutureListWeatherFragment, Observer { location ->
             if (location == null) return@Observer
 
-            updateLocation(location.name)
+            updateSupportActionBarTitleLocation(location.name)
         })
     }
 
-    private fun updateLocation(location: String) {
+    private fun updateSupportActionBarTitleLocation(location: String) {
         (activity as? AppCompatActivity)?.supportActionBar?.title = location
     }
 
-    private fun updateDateToNextDays() {
-        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = getString(R.string.text_7_days)
+    private fun updateSupportActionBarSubtitle(text: String) {
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = text
     }
 
     private fun initRecyclerView(items: List<FutureWeatherItem>) {

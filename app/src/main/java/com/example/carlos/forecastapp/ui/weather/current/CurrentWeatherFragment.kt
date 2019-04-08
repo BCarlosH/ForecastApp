@@ -37,7 +37,12 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CurrentWeatherViewModel::class.java)
 
+        initViews()
         bindUI()
+    }
+
+    private fun initViews() {
+        updateSupportActionBarSubtitle(getString(R.string.today))
     }
 
     private fun bindUI() = launch {
@@ -49,7 +54,6 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
             if (it == null) return@Observer
 
             group_loading.visibility = View.GONE
-            updateDateToToday()
             updateTemperatures(it.temperature, it.feelsLikeTemperature)
             updateCondition(it.conditionText)
             updatePrecipitation(it.precipitationVolume)
@@ -65,7 +69,7 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
         weatherLocation.observe(this@CurrentWeatherFragment, Observer { location ->
             if (location == null) return@Observer
 
-            updateLocation(location.name)
+            updateSupportActionBarTitleLocation(location.name)
         })
     }
 
@@ -73,12 +77,12 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
         return if (viewModel.isMetricUnit) metric else imperial
     }
 
-    private fun updateLocation(location: String) {
+    private fun updateSupportActionBarTitleLocation(location: String) {
         (activity as? AppCompatActivity)?.supportActionBar?.title = location
     }
 
-    private fun updateDateToToday() {
-        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = getString(R.string.today)
+    private fun updateSupportActionBarSubtitle(text: String) {
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = text
     }
 
     private fun updateTemperatures(temperature: Double, feelsLike: Double) {
@@ -112,6 +116,5 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
             chooseLocalizedUnitAbbreviation(getString(R.string.kilometers), getString(R.string.miles))
         textView_visibility.text = getString(R.string.visibility, visibilityDistance, unitAbbreviation)
     }
-
 
 }
