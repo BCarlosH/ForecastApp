@@ -4,15 +4,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.carlos.forecastapp.R
+import com.example.carlos.forecastapp.internal.toFutureWeatherItems
+import com.example.carlos.forecastapp.ui.base.ScopedFragment
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.future_list_weather_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.closestKodein
+import org.kodein.di.generic.instance
 
-class FutureListWeatherFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = FutureListWeatherFragment()
-    }
+class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
+
+    override val kodein: Kodein by closestKodein()
+    private val viewModelFactory: FutureWeatherViewModelFactory by instance()
+
 
     private lateinit var viewModel: FutureListWeatherViewModel
 
@@ -25,8 +40,56 @@ class FutureListWeatherFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(FutureListWeatherViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(FutureListWeatherViewModel::class.java)
+        bindUI()
+    }
+
+    private fun bindUI() = launch(Dispatchers.Main) {
+        val futureWeather = viewModel.futureWeatherList.await()
+        val weatherLocation = viewModel.weatherLocation.await()
+
+        futureWeather.observe(this@FutureListWeatherFragment, Observer { futureWeatherList ->
+            if (futureWeatherList == null) return@Observer
+
+            group_loading.visibility = View.GONE
+
+            updateDateToNextDays()
+            initRecyclerView(futureWeatherList.toFutureWeatherItems())
+        })
+
+        weatherLocation.observe(this@FutureListWeatherFragment, Observer { location ->
+            if (location == null) return@Observer
+
+            updateLocation(location.name)
+        })
+    }
+
+    private fun updateLocation(location: String) {
+        (activity as? AppCompatActivity)?.supportActionBar?.title = location
+    }
+
+    private fun updateDateToNextDays() {
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = getString(R.string.text_7_days)
+    }
+
+    private fun initRecyclerView(items: List<FutureWeatherItem>) {
+        val groupAdapter = GroupAdapter<ViewHolder>().apply {
+            addAll(items)
+        }
+
+        groupAdapter.setOnItemClickListener { item, view ->
+            Toast.makeText(
+                this@FutureListWeatherFragment.context,
+                "Clicked on" + item.id,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        recycler_view.apply {
+            layoutManager = LinearLayoutManager(this@FutureListWeatherFragment.context)
+            adapter = groupAdapter
+        }
+
     }
 
 }
