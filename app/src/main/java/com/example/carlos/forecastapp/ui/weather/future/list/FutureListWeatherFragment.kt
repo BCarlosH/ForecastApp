@@ -54,6 +54,8 @@ class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
         val futureWeather = viewModel.futureWeatherList.await()
         val weatherLocation = viewModel.weatherLocation.await()
 
+        group_loading.visibility = View.VISIBLE
+
         futureWeather.observe(this@FutureListWeatherFragment, Observer { futureWeatherList ->
             if (futureWeatherList == null) return@Observer
 
