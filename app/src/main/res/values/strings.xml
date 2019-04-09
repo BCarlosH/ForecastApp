@@ -8,6 +8,7 @@
     <string name="celcius">°C</string>
     <string name="farenheit">°F</string>
     <string name="blank_templerature">%1$.1f%2$s</string>
+    <string name="min_max_templerature">Min %1$.1f%2$s - Max %3$.2f%4$s</string>
     <string name="feels_like">Feels like %1$.1f%2$s</string>
     <string name="millimeters">mm</string>
     <string name="inches">in</string>
@@ -15,10 +16,12 @@
     <string name="kilometers_per_hour">kph</string>
     <string name="miles_per_hour">mph</string>
     <string name="wind">Wind: %1$s, %2$.1f %3$s</string>
+    <string name="wind_max_speed">Wind speed: %1$.1f %2$s</string>
     <string name="kilometers">km</string>
     <string name="miles">mi.</string>
     <string name="visibility">Visibility: %1$.1f %2$s</string>
     <string name="location_warning_toast_msg">Please, set location manually in settings</string>
+    <string name="uv">UV: %1$.1f</string>
 
     <!--Settings-->
     <string name="weather_location">Weather Location</string>

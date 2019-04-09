@@ -46,10 +46,17 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun bindUI() = launch {
-        val currentWeather = viewModel.weather.await()
         val weatherLocation = viewModel.weatherLocation.await()
+        val currentWeather = viewModel.weather.await()
 
         group_loading.visibility = View.VISIBLE
+
+        //Create weatherLocation observer
+        weatherLocation.observe(this@CurrentWeatherFragment, Observer { location ->
+            if (location == null) return@Observer
+
+            updateSupportActionBarTitleLocation(location.name)
+        })
 
         //Create currentWeather observer
         currentWeather.observe(this@CurrentWeatherFragment, Observer {
@@ -67,12 +74,6 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
                 .into(imageView_condition_icon)
         })
 
-        //Create weatherLocation observer
-        weatherLocation.observe(this@CurrentWeatherFragment, Observer { location ->
-            if (location == null) return@Observer
-
-            updateSupportActionBarTitleLocation(location.name)
-        })
     }
 
     private fun chooseLocalizedUnitAbbreviation(metric: String, imperial: String): String {

@@ -1,8 +1,8 @@
 package com.example.carlos.forecastapp.ui.weather.future.list
 
 import com.example.carlos.forecastapp.R
-import com.example.carlos.forecastapp.data.db.unitlocalized.future.MetricFutureWeatherEntry
-import com.example.carlos.forecastapp.data.db.unitlocalized.future.UnitSpecificSimpleFutureWeatherEntry
+import com.example.carlos.forecastapp.data.db.unitlocalized.future.list.MetricFutureWeatherEntry
+import com.example.carlos.forecastapp.data.db.unitlocalized.future.list.UnitSpecificSimpleFutureWeatherEntry
 import com.example.carlos.forecastapp.internal.glide.GlideApp
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
@@ -12,7 +12,7 @@ import org.threeten.bp.format.FormatStyle
 
 
 class FutureWeatherItem(
-    private val weatherEntry: UnitSpecificSimpleFutureWeatherEntry
+    val weatherEntry: UnitSpecificSimpleFutureWeatherEntry
 ) : Item() {
 
 

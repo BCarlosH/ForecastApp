@@ -6,7 +6,8 @@ import com.example.carlos.forecastapp.data.db.FutureWeatherDao
 import com.example.carlos.forecastapp.data.db.WeatherLocationDao
 import com.example.carlos.forecastapp.data.db.entity.WeatherLocation
 import com.example.carlos.forecastapp.data.db.unitlocalized.current.UnitSpecificCurrentWeatherEntry
-import com.example.carlos.forecastapp.data.db.unitlocalized.future.UnitSpecificSimpleFutureWeatherEntry
+import com.example.carlos.forecastapp.data.db.unitlocalized.future.detail.UnitSpecificDetailFutureWeatherEntry
+import com.example.carlos.forecastapp.data.db.unitlocalized.future.list.UnitSpecificSimpleFutureWeatherEntry
 import com.example.carlos.forecastapp.data.network.FORECAST_DAYS_COUNT
 import com.example.carlos.forecastapp.data.network.WeatherNetworkDataSource
 import com.example.carlos.forecastapp.data.network.response.CurrentWeatherResponse
@@ -66,6 +67,22 @@ class ForecastRepositoryImpl(
                 return@withContext futureWeatherDao.getSimpleWeatherForecastMetric(startDate)
             } else {
                 return@withContext futureWeatherDao.getSimpleWeatherForecastImperial(startDate)
+            }
+
+        }
+    }
+
+    override suspend fun getFutureWeatherByDate(
+        date: LocalDate,
+        metric: Boolean
+    ): LiveData<out UnitSpecificDetailFutureWeatherEntry> {
+        return withContext(Dispatchers.IO) {
+            initWeatherData()
+
+            if (metric) {
+                return@withContext futureWeatherDao.getDetailedWeatherByDateMetric(date)
+            } else {
+                return@withContext futureWeatherDao.getDetailedWeatherByDateImperial(date)
             }
 
         }

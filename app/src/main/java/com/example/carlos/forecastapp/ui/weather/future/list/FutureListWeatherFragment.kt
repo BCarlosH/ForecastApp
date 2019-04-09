@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.carlos.forecastapp.R
+import com.example.carlos.forecastapp.data.db.LocalDateConverter
 import com.example.carlos.forecastapp.internal.toFutureWeatherItems
 import com.example.carlos.forecastapp.ui.base.ScopedFragment
 import com.xwray.groupie.GroupAdapter
@@ -21,6 +22,7 @@ import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
+import org.threeten.bp.LocalDate
 
 
 class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
@@ -51,10 +53,16 @@ class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun bindUI() = launch(Dispatchers.Main) {
-        val futureWeather = viewModel.futureWeatherList.await()
         val weatherLocation = viewModel.weatherLocation.await()
+        val futureWeather = viewModel.futureWeatherList.await()
 
         group_loading.visibility = View.VISIBLE
+
+        weatherLocation.observe(this@FutureListWeatherFragment, Observer { location ->
+            if (location == null) return@Observer
+
+            updateSupportActionBarTitleLocation(location.name)
+        })
 
         futureWeather.observe(this@FutureListWeatherFragment, Observer { futureWeatherList ->
             if (futureWeatherList == null) return@Observer
@@ -64,11 +72,6 @@ class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
             initRecyclerView(futureWeatherList.toFutureWeatherItems())
         })
 
-        weatherLocation.observe(this@FutureListWeatherFragment, Observer { location ->
-            if (location == null) return@Observer
-
-            updateSupportActionBarTitleLocation(location.name)
-        })
     }
 
     private fun updateSupportActionBarTitleLocation(location: String) {
@@ -85,11 +88,9 @@ class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
         }
 
         groupAdapter.setOnItemClickListener { item, view ->
-            Toast.makeText(
-                this@FutureListWeatherFragment.context,
-                "Clicked on" + item.id,
-                Toast.LENGTH_SHORT
-            ).show()
+            (item as? FutureWeatherItem)?.let {
+                showWeatherDetail(it.weatherEntry.date, view)
+            }
         }
 
         recycler_view.apply {
@@ -97,6 +98,12 @@ class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
             adapter = groupAdapter
         }
 
+    }
+
+    private fun showWeatherDetail(date: LocalDate, view: View) {
+        val dateString = LocalDateConverter.dateToString(date)!!
+        val actionDetail = FutureListWeatherFragmentDirections.actionDetail(dateString)
+        Navigation.findNavController(view).navigate(actionDetail)
     }
 
 }
