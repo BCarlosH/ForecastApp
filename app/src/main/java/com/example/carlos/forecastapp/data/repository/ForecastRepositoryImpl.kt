@@ -8,6 +8,7 @@ import com.example.carlos.forecastapp.data.db.entity.WeatherLocation
 import com.example.carlos.forecastapp.data.db.unitlocalized.current.UnitSpecificCurrentWeatherEntry
 import com.example.carlos.forecastapp.data.db.unitlocalized.future.detail.UnitSpecificDetailFutureWeatherEntry
 import com.example.carlos.forecastapp.data.db.unitlocalized.future.list.UnitSpecificSimpleFutureWeatherEntry
+import com.example.carlos.forecastapp.data.mocks.MockedHour
 import com.example.carlos.forecastapp.data.network.FORECAST_DAYS_COUNT
 import com.example.carlos.forecastapp.data.network.WeatherNetworkDataSource
 import com.example.carlos.forecastapp.data.network.response.CurrentWeatherResponse
@@ -28,6 +29,11 @@ class ForecastRepositoryImpl(
     private val weatherNetworkDataSource: WeatherNetworkDataSource,
     private val locationProvider: LocationProvider
 ) : ForecastRepository {
+
+    /**
+     * Always true because for now, I wont pay for premium API services
+     */
+    var mocksNeed = true
 
 
     init {
@@ -104,7 +110,14 @@ class ForecastRepositoryImpl(
     private fun persistFetchedFutureWeather(fetchedWeather: FutureWeatherResponse) {
         GlobalScope.launch(Dispatchers.IO) {
             deleteOldForecastData()
-            val futureWeatherList = fetchedWeather.futureWeatherEntries.entries
+
+            val futureWeatherList =
+                if (mocksNeed) {
+                    MockedHour.mockHours(fetchedWeather.futureWeatherEntries.entries)
+                } else {
+                    fetchedWeather.futureWeatherEntries.entries
+                }
+
             futureWeatherDao.insert(futureWeatherList)
             weatherLocationDao.upsert(fetchedWeather.location)
         }

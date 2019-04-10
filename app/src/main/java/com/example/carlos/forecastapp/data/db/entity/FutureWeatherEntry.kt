@@ -14,5 +14,6 @@ data class FutureWeatherEntry(
     val astro: Astro,
     val date: String,
     @Embedded
-    val day: Day
+    val day: Day,
+    val hour: List<Hour>
 )

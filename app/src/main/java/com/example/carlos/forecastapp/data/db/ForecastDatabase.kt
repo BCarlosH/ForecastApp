@@ -14,7 +14,7 @@ import com.example.carlos.forecastapp.data.db.entity.WeatherLocation
     entities = [CurrentWeatherEntry::class, FutureWeatherEntry::class, WeatherLocation::class],
     version = 1
 )
-@TypeConverters(LocalDateConverter::class)
+@TypeConverters(LocalDateConverter::class, HourListConverter::class)
 abstract class ForecastDatabase : RoomDatabase() {
 
     abstract fun currentWeatherDao(): CurrentWeatherDao

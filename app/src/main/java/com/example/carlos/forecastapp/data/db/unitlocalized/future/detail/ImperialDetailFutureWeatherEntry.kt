@@ -1,6 +1,7 @@
 package com.example.carlos.forecastapp.data.db.unitlocalized.future.detail
 
 import androidx.room.ColumnInfo
+import com.example.carlos.forecastapp.data.db.entity.Hour
 import org.threeten.bp.LocalDate
 
 
@@ -24,5 +25,7 @@ data class ImperialDetailFutureWeatherEntry(
     @ColumnInfo(name = "avgvisMiles")
     override val avgVisibilityDistance: Double,
     @ColumnInfo(name = "uv")
-    override val uv: Double
+    override val uv: Double,
+    @ColumnInfo(name = "hour")
+    override val hourList: List<Hour>
 ) : UnitSpecificDetailFutureWeatherEntry

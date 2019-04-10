@@ -11,6 +11,9 @@ import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
 
 
+private const val DATE_PATTERN = "EEE, d MMM"
+
+
 class FutureWeatherItem(
     val weatherEntry: UnitSpecificSimpleFutureWeatherEntry
 ) : Item() {
@@ -34,7 +37,7 @@ class FutureWeatherItem(
     }
 
     private fun ViewHolder.updateDate() {
-        val dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+        val dateFormatter = DateTimeFormatter.ofPattern(DATE_PATTERN)
         textView_date.text = weatherEntry.date.format(dateFormatter)
     }
 

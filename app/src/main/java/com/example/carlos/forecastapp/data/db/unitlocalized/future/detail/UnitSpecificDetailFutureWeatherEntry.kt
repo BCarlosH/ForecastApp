@@ -1,5 +1,6 @@
 package com.example.carlos.forecastapp.data.db.unitlocalized.future.detail
 
+import com.example.carlos.forecastapp.data.db.entity.Hour
 import org.threeten.bp.LocalDate
 
 interface UnitSpecificDetailFutureWeatherEntry {
@@ -14,5 +15,6 @@ interface UnitSpecificDetailFutureWeatherEntry {
     val totalPrecipitation: Double
     val avgVisibilityDistance: Double
     val uv: Double
+    val hourList: List<Hour>
 
 }

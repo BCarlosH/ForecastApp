@@ -87,7 +87,7 @@ class FutureDetailWeatherFragment : ScopedFragment(), KodeinAware {
 
     private fun updateSupportActionBarSubtitle(date: LocalDate) {
         (activity as? AppCompatActivity)?.supportActionBar?.subtitle =
-            date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+            date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
     }
 
     private fun updateTemperatures(temperature: Double, min: Double, max: Double) {
