@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.carlos.forecastapp.R
 import com.example.carlos.forecastapp.data.db.LocalDateConverter
 import com.example.carlos.forecastapp.internal.DateNotFoundException
 import com.example.carlos.forecastapp.internal.glide.GlideApp
+import com.example.carlos.forecastapp.internal.toHourWeatherItems
 import com.example.carlos.forecastapp.ui.base.ScopedFragment
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.future_detail_weather_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +24,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.factory
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
 
@@ -73,11 +78,12 @@ class FutureDetailWeatherFragment : ScopedFragment(), KodeinAware {
             updatePrecipitation(weatherEntry.totalPrecipitation)
             updateWindSpeed(weatherEntry.maxWindSpeed)
             updateVisibility(weatherEntry.avgVisibilityDistance)
-            updateUv(weatherEntry.uv)
 
             GlideApp.with(this@FutureDetailWeatherFragment)
                 .load("http:" + weatherEntry.conditionIconUrl)
                 .into(imageView_condition_icon)
+
+            initRecyclerView(weatherEntry.hourList.toHourWeatherItems())
         })
     }
 
@@ -127,8 +133,21 @@ class FutureDetailWeatherFragment : ScopedFragment(), KodeinAware {
         textView_visibility.text = getString(R.string.visibility, visibilityDistance, unitAbbreviation)
     }
 
-    private fun updateUv(uv: Double) {
-        textView_uv.text = getString(R.string.uv, uv)
+    private fun initRecyclerView(items: List<HourWeatherItem>) {
+        val groupAdapter = GroupAdapter<ViewHolder>().apply {
+            addAll(items)
+        }
+
+        //TODO: add hour recyclerView to landscape layout
+        recycler_view?.apply {
+            layoutManager = LinearLayoutManager(
+                this@FutureDetailWeatherFragment.context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = groupAdapter
+            scrollToPosition(LocalTime.now().hour)
+        }
     }
 
 }

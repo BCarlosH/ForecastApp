@@ -9,11 +9,18 @@
         tools:context=".ui.weather.future.detail.FutureDetailWeatherFragment">
 
     <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
+            android:id="@+id/vertical_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="192dp"/>
+            app:layout_constraintGuide_percent="0.50"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontal_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5"/>
 
     <TextView
             android:id="@+id/textView_condition"
@@ -24,7 +31,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
             android:gravity="bottom"
-            android:textSize="40sp"
+            android:textSize="36sp"
             android:maxLines="2"
             android:ellipsize="end"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
@@ -38,12 +45,12 @@
             android:id="@+id/textView_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
             app:layout_constraintBottom_toBottomOf="@+id/imageView_condition_icon"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageView_condition_icon"
             tools:text="25.0°C"/>
@@ -54,8 +61,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="18sp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+            app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textView_temperature"
@@ -71,13 +79,13 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.593"
-            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.60"
+            app:layout_constraintStart_toEndOf="@+id/vertical_guideline"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.25"
+            app:layout_constraintVertical_bias="0.8"
             app:layout_constraintWidth_percent="0.30"
             tools:src="@drawable/ic_weather_sunny"
             tools:tint="#f9a920"/>
@@ -90,15 +98,16 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.03"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.60"
-            tools:text="Wind: SE, 5.3 m/s"/>
+            app:layout_constraintTop_toBottomOf="@+id/horizontal_guideline"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="Wind: SE, 5.3 m/s"
+    />
 
     <TextView
             android:id="@+id/textView_precipitation"
@@ -108,7 +117,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -126,7 +135,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -143,8 +152,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -153,5 +161,14 @@
             app:layout_constraintTop_toBottomOf="@+id/textView_visibility"
             app:layout_constraintVertical_bias="0.0"
             tools:text="UV: 2.54"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView_uv"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
