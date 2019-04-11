@@ -50,13 +50,12 @@ class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
 
     private fun initViews() {
         updateSupportActionBarSubtitle(getString(R.string.text_7_days))
+        group_loading.visibility = View.VISIBLE
     }
 
     private fun bindUI() = launch(Dispatchers.Main) {
         val weatherLocation = viewModel.weatherLocation.await()
         val futureWeather = viewModel.futureWeatherList.await()
-
-        group_loading.visibility = View.VISIBLE
 
         weatherLocation.observe(this@FutureListWeatherFragment, Observer { location ->
             if (location == null) return@Observer

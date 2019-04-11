@@ -11,6 +11,7 @@ import com.example.carlos.forecastapp.R
 import com.example.carlos.forecastapp.internal.glide.GlideApp
 import com.example.carlos.forecastapp.ui.base.ScopedFragment
 import kotlinx.android.synthetic.main.current_weather_fragment.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -43,13 +44,13 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
 
     private fun initViews() {
         updateSupportActionBarSubtitle(getString(R.string.today))
+        group_loading.visibility = View.VISIBLE
     }
 
-    private fun bindUI() = launch {
+    private fun bindUI() = launch(Dispatchers.Main) {
         val weatherLocation = viewModel.weatherLocation.await()
         val currentWeather = viewModel.weather.await()
 
-        group_loading.visibility = View.VISIBLE
 
         //Create weatherLocation observer
         weatherLocation.observe(this@CurrentWeatherFragment, Observer { location ->
