@@ -9,7 +9,8 @@ import kotlinx.android.synthetic.main.item_hour_weather_detail.*
 
 
 class HourWeatherItem(
-    private val hourEntry: Hour
+    private val hourEntry: Hour,
+    private val isMetricUnit: Boolean
 ) : Item() {
 
 
@@ -48,17 +49,11 @@ class HourWeatherItem(
     }
 
     private fun getLocalizedUnitAbbreviation(metric: String, imperial: String): String {
-        return if (isMetricUnit()) metric else imperial
+        return if (isMetricUnit) metric else imperial
     }
 
     private fun getLocalizedTemperature(tempC: Double, tempF: Double): Double {
-        return if (isMetricUnit()) tempC else tempF
-    }
-
-    private fun isMetricUnit(): Boolean {
-        //TODO: add logic to choose between units
-//        return weatherEntry is MetricDetailFutureWeatherEntry
-        return true
+        return if (isMetricUnit) tempC else tempF
     }
 
     private fun ViewHolder.updateConditionImage() {

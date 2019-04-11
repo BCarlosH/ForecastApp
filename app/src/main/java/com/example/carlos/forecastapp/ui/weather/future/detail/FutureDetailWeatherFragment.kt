@@ -83,7 +83,7 @@ class FutureDetailWeatherFragment : ScopedFragment(), KodeinAware {
                 .load("http:" + weatherEntry.conditionIconUrl)
                 .into(imageView_condition_icon)
 
-            initRecyclerView(weatherEntry.hourList.toHourWeatherItems())
+            initRecyclerView(weatherEntry.hourList.toHourWeatherItems(viewModel.isMetricUnit))
         })
     }
 
