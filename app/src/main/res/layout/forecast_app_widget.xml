@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/widget_layout"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:padding="@dimen/widget_margin"
+              android:orientation="vertical"
+              android:gravity="center"
+              android:background="@color/transparent">
+
+    <ImageView
+            android:id="@+id/appwidget_condition_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            tools:src="@drawable/ic_weather_sunny"
+            tools:tint="#f9a920"/>
+
+    <TextView
+            android:id="@+id/appwidget_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
+            tools:text="25.0°C"/>
+
+</LinearLayout>

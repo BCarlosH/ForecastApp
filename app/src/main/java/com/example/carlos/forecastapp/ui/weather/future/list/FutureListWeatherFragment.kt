@@ -20,14 +20,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.closestKodein
+import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import org.threeten.bp.LocalDate
 
 
 class FutureListWeatherFragment : ScopedFragment(), KodeinAware {
 
-    override val kodein: Kodein by closestKodein()
+    override val kodein: Kodein by kodein()
     private val viewModelFactory: FutureWeatherViewModelFactory by instance()
 
 

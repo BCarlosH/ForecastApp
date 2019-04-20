@@ -37,4 +37,11 @@ interface FutureWeatherDao {
     @Query("delete from future_weather where date(date) < date(:firstDateToKeep)")
     fun deleteOldEntries(firstDateToKeep: LocalDate)
 
+
+    @Query("select * from future_weather where date(date) = date(:date)")
+    fun getWidgetDetailedWeatherByDateMetric(date: LocalDate): MetricDetailFutureWeatherEntry
+
+    @Query("select * from future_weather where date(date) = date(:date)")
+    fun getWidgetDetailedWeatherByDateImperial(date: LocalDate): ImperialDetailFutureWeatherEntry
+
 }

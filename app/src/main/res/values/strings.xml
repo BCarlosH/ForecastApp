@@ -32,5 +32,7 @@
     <string name="units">Units</string>
     <string name="unit_system">Unit system</string>
 
+    <string name="appwidget_text">25.0 C</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>

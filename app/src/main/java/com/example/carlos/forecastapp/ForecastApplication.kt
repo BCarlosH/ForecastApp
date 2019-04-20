@@ -5,10 +5,9 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.example.carlos.forecastapp.data.repository.ForecastRepository
 import com.example.carlos.forecastapp.data.repository.ForecastRepositoryImpl
-import com.example.carlos.forecastapp.di.dbModule
-import com.example.carlos.forecastapp.di.networkModule
-import com.example.carlos.forecastapp.di.providerModule
-import com.example.carlos.forecastapp.di.viewModelFactoryModule
+import com.example.carlos.forecastapp.data.repository.widget.ForecastWidgetRepository
+import com.example.carlos.forecastapp.data.repository.widget.ForecastWidgetRepositoryImpl
+import com.example.carlos.forecastapp.di.*
 import com.google.android.gms.location.LocationServices
 import com.jakewharton.threetenabp.AndroidThreeTen
 import org.kodein.di.Kodein
@@ -36,12 +35,19 @@ class ForecastApplication : Application(), KodeinAware {
             )
         }
 
+        bind<ForecastWidgetRepository>() with singleton {
+            ForecastWidgetRepositoryImpl(
+                instance()
+            )
+        }
+
         bind() from provider { LocationServices.getFusedLocationProviderClient(instance<Context>()) }
 
         import(viewModelFactoryModule)
         import(dbModule)
         import(networkModule)
         import(providerModule)
+        import(widgetModule)
 
     }
 
