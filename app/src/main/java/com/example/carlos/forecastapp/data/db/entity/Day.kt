@@ -1,7 +1,6 @@
 package com.example.carlos.forecastapp.data.db.entity
 
 import androidx.room.Embedded
-import com.example.carlos.forecastapp.data.db.entity.Condition
 import com.google.gson.annotations.SerializedName
 
 
