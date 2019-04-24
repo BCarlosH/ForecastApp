@@ -12,6 +12,6 @@ private const val MODULE_NAME = "Widget Module"
 
 val widgetModule = Kodein.Module(MODULE_NAME, false) {
 
-    bind<ForecastAppWidgetManager>() with singleton { ForecastAppWidgetManager(instance(), instance()) }
+    bind() from singleton { ForecastAppWidgetManager(instance(), instance()) }
 
 }
