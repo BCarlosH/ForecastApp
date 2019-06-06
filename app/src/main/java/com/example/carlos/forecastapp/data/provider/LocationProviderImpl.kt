@@ -8,7 +8,7 @@ import android.location.Location
 import androidx.core.content.ContextCompat
 import com.example.carlos.forecastapp.data.db.entity.WeatherLocation
 import com.example.carlos.forecastapp.internal.LocationPermissionNotGrantedException
-import com.example.carlos.forecastapp.internal.asDeferred
+import com.example.carlos.forecastapp.internal.asDeferredAsync
 import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.coroutines.Deferred
 
@@ -80,7 +80,7 @@ class LocationProviderImpl(
     @SuppressLint("MissingPermission")
     private fun getLastDeviceLocationAsync(): Deferred<Location?> {
         return if (hasLocationPermission())
-            fusedLocationProviderClient.lastLocation.asDeferred()
+            fusedLocationProviderClient.lastLocation.asDeferredAsync()
         else
             throw LocationPermissionNotGrantedException()
     }

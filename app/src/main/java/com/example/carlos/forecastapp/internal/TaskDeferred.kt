@@ -5,9 +5,21 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 
 
-fun <T> Task<T>.asDeferred(): Deferred<T> {
+/**
+ *
+ * Converts the task to an instance of [Deferred].
+ * So we can call the function that returns the task from a Coroutine.
+ *
+ */
+fun <T> Task<T>.asDeferredAsync(): Deferred<T> {
 
     val deferred = CompletableDeferred<T>()
+
+    deferred.invokeOnCompletion {
+        if (deferred.isCancelled) {
+            // Optional, handle Coroutine cancellation here
+        }
+    }
 
     this.addOnSuccessListener { result ->
         deferred.complete(result)

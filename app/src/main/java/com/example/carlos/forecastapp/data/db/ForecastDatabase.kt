@@ -12,7 +12,8 @@ import com.example.carlos.forecastapp.data.db.entity.WeatherLocation
 
 @Database(
     entities = [CurrentWeatherEntry::class, FutureWeatherEntry::class, WeatherLocation::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 @TypeConverters(LocalDateConverter::class, HourListConverter::class)
 abstract class ForecastDatabase : RoomDatabase() {
